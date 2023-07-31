@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/layouts/shopping_layout.dart';
 import 'package:ecommerce_app/modules/login/cubit.dart';
 import 'package:ecommerce_app/modules/login/states.dart';
+import 'package:ecommerce_app/modules/register/register_screen.dart';
 import 'package:ecommerce_app/shared/components.dart';
 import 'package:ecommerce_app/shared/constants.dart';
 import 'package:ecommerce_app/shared/themes.dart';
@@ -7,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  SnackBar? snackBar;
+
+  LoginScreen({super.key, this.snackBar});
 
   var formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -19,13 +23,23 @@ class LoginScreen extends StatelessWidget {
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
+          if(state is LoginInitialState) {
+            if(snackBar != null) {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar!);
+              snackBar = null;
+            }
+          }
           if(state is LoginErrorState) {
+            showToast(context, "Error: Email and/or password is incorrect", ToastType.error);
             print(state.error);
+          }
+          if(state is LoginSuccessState) {
+            navigateAndFinish(context, ShoppingLayout());
           }
         },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
-
+          cubit.init();
           return Scaffold(
             appBar: AppBar(
               backgroundColor: myOrange,
@@ -92,13 +106,12 @@ class LoginScreen extends StatelessWidget {
                       MyTFF(
                         controller: passwordController,
                         labelText: "Password",
-                        obscureText: true,
+                        obscureText: !cubit.showPassword,
                         prefixIcon: Icon(Icons.lock),
                         suffixIcon: IconButton(
-                          icon: Icon(Icons.visibility),
+                          icon: cubit.passwordSuffixIcon,
                           onPressed: () {
-                            //show text and change eye icon
-                            //to visibility_off
+                            cubit.togglePasswordVisibility();
                           },
                         ),
                         keyboardType: TextInputType.visiblePassword,
@@ -112,7 +125,8 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 20.0,
                       ),
-                      MyButton(
+                      if(state is! LoginLoadingState)
+                        MyButton(
                         text: "Log In",
                         fontWeight: FontWeight.bold,
                         onPressed: () {
@@ -121,6 +135,8 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                       ),
+                      if(state is LoginLoadingState)
+                        const Center(child: CircularProgressIndicator()),
                       Row(
                         children: [
                           Text(
@@ -133,7 +149,7 @@ class LoginScreen extends StatelessWidget {
                               style: SmallText(context, color: Colors.blue),
                             ),
                             onPressed: () {
-
+                              navigateTo(context, RegisterScreen());
                             },
                           ),
                         ],

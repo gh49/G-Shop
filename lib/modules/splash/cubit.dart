@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:ecommerce_app/modules/splash/states.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashCubit extends Cubit<SplashStates> {
@@ -9,7 +11,7 @@ class SplashCubit extends Cubit<SplashStates> {
 
   bool isInitState = true;
 
-  void init() {
+  Future<void> init() async {
     if(!isInitState) {
       return;
     }
@@ -17,14 +19,28 @@ class SplashCubit extends Cubit<SplashStates> {
       isInitState = false;
     }
 
-    simulateServiceCall(3);
+    await Future.delayed(const Duration(seconds: 1));
+
+    if(FirebaseAuth.instance.currentUser == null) {
+      emit(SplashNotLoggedInState());
+      return;
+    }
+
+    FirebaseAuth.instance.signOut();
+
+    FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
+      emit(SplashLoggedInState());
+    }).catchError((error) {
+      FirebaseAuth.instance.signOut();
+      emit(SplashNotLoggedInState());
+    });
+
   }
 
   void simulateServiceCall(int seconds) {
     Future.delayed(Duration(seconds: seconds)).
     then((value) {
       print("Service Call Completed");
-      emit(SplashLoggedInState());
     });
   }
 }

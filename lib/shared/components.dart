@@ -33,6 +33,8 @@ Widget MyTFF({
   String? Function(String?)? validator,
   void Function(String)? onFieldSubmitted,
   void Function(String)? onChanged,
+  void Function()? onTapped,
+  bool readOnly = false,
 }) => TextFormField(
   controller: controller,
   validator: validator,
@@ -40,6 +42,8 @@ Widget MyTFF({
   onChanged: onChanged,
   keyboardType: keyboardType,
   obscureText: obscureText,
+  onTap: onTapped,
+  readOnly: readOnly,
   decoration: InputDecoration(
     labelText: labelText,
     hintText: hintText,
@@ -74,3 +78,35 @@ Widget MyButton({
     ),
   ),
 );
+
+void simulateServiceCall(int seconds) {
+  Future.delayed(Duration(seconds: seconds)).
+  then((value) {
+    print("Service Call Completed");
+  });
+}
+
+enum ToastType {
+  success,
+  error,
+  message,
+}
+
+void showToast(BuildContext context, String text, ToastType toastType) {
+  late Color toastColor;
+  switch (toastType) {
+    case ToastType.success:
+      toastColor = Colors.green;
+      break;
+    case ToastType.error:
+      toastColor = Colors.red;
+      break;
+    case ToastType.message:
+      toastColor = Colors.yellow;
+      break;
+    default:
+      toastColor = Colors.yellow;
+  }
+  var snackBar = SnackBar(content: Text(text), backgroundColor: toastColor, );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}

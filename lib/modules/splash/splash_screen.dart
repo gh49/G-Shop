@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/layouts/shopping_layout.dart';
 import 'package:ecommerce_app/modules/login/login_screen.dart';
 import 'package:ecommerce_app/modules/splash/cubit.dart';
 import 'package:ecommerce_app/modules/splash/states.dart';
@@ -15,7 +16,11 @@ class SplashScreen extends StatelessWidget {
       create: (BuildContext context) => SplashCubit(),
       child: BlocConsumer<SplashCubit, SplashStates>(
         listener: (context, state) {
+          print("Hello there");
           if(state is SplashLoggedInState) {
+            navigateAndFinish(context, ShoppingLayout());
+          }
+          if(state is SplashNotLoggedInState) {
             navigateAndFinish(context, LoginScreen());
           }
         },
