@@ -4,6 +4,7 @@ import 'package:ecommerce_app/modules/splash/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SplashCubit extends Cubit<SplashStates> {
   SplashCubit() : super(SplashInitialState());
@@ -26,7 +27,7 @@ class SplashCubit extends Cubit<SplashStates> {
       return;
     }
 
-    FirebaseAuth.instance.signOut();
+    //FirebaseAuth.instance.signOut();
 
     FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
       emit(SplashLoggedInState());
@@ -43,4 +44,8 @@ class SplashCubit extends Cubit<SplashStates> {
       print("Service Call Completed");
     });
   }
+
+
+
+
 }

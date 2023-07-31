@@ -7,6 +7,7 @@ import 'package:ecommerce_app/shared/constants.dart';
 import 'package:ecommerce_app/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   SnackBar? snackBar;
@@ -153,6 +154,32 @@ class LoginScreen extends StatelessWidget {
                             },
                           ),
                         ],
+                      ),
+                      SizedBox(height: 20.0,),
+                      Center(
+                        child: Column(
+                          children: [
+                            FloatingActionButton(
+                              backgroundColor: Colors.white,
+                              onPressed: (){
+                                cubit.signInWithGoogle();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image(
+                                  image: AssetImage("assets/google_logo.png"),
+
+                                ),
+                              )),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            Text(
+                              "Continue with Google",
+                              style: SmallText(context),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
