@@ -24,6 +24,12 @@ class ShoppingLayout extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: myOrange,
+              title: Text(
+                cubit.titles[cubit.screenIndex],
+                style: TextStyle(
+                  fontFamily: "QuickSand"
+                ),
+              ),
               actions: [
                 IconButton(
                     onPressed: (){
@@ -34,12 +40,6 @@ class ShoppingLayout extends StatelessWidget {
                       });
                     },
                     icon: const Icon(Icons.logout),
-                ),
-                IconButton(
-                  onPressed: (){
-                    cubit.testEmit();
-                  },
-                  icon: const Icon(Icons.help),
                 ),
               ],
             ),

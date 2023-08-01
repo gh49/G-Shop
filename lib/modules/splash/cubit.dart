@@ -20,7 +20,7 @@ class SplashCubit extends Cubit<SplashStates> {
       isInitState = false;
     }
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
 
     if(FirebaseAuth.instance.currentUser == null) {
       emit(SplashNotLoggedInState());

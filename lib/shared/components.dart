@@ -110,3 +110,80 @@ void showToast(BuildContext context, String text, ToastType toastType) {
   var snackBar = SnackBar(content: Text(text), backgroundColor: toastColor, );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
+
+Widget MyElevatedButton({
+  required void Function()? onPressed,
+  required IconData iconData,
+  required String text,
+  Color color = Colors.blue,
+}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      elevation: 10.0,
+      backgroundColor: color,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Icon(
+            iconData,
+            size: 70,
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+            text,
+            style: TextStyle(
+              fontFamily: "QuickSand",
+              fontSize: 20.0,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget CategoryItem({
+  required void Function()? onPressed,
+  required IconData iconData,
+  required String text,
+  Color color = Colors.blue,
+}) {
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(5)),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Icon(
+              iconData,
+              size: 70,
+              color: Colors.white,
+            ),
+            SizedBox(height: 15.0,),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "QuickSand",
+                fontSize: 20.0,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+void categoryItemOnPressed(CategoryType category) {
+
+}
