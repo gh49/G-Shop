@@ -47,7 +47,9 @@ Widget MyTFF({
   decoration: InputDecoration(
     labelText: labelText,
     hintText: hintText,
-    border: const OutlineInputBorder(),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30.0),
+    ),
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
   ),
@@ -60,10 +62,14 @@ Widget MyButton({
   double height = 50.0,
   TextAlign textAlign = TextAlign.center,
   FontWeight fontWeight = FontWeight.normal,
+  Color color = myOrange,
 }) => Container(
   width: width,
   height: height,
-  color: myOrange,
+  decoration: BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(30.0),
+  ),
   child: MaterialButton(
     onPressed: onPressed,
     child: Text(

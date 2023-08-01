@@ -14,43 +14,46 @@ class HomeScreen extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       child: Container(
         width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                elevation: 10.0,
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomStart,
-                  children: [
-                    const Image(
-                      image: AssetImage("assets/shop_card2.png"),
-                      fit: BoxFit.fitWidth,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Text(
-                            "Browse our different categories",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 37.0,
-                              fontFamily: "QuickSand",
-                              fontWeight: FontWeight.bold,
-                            ),
+        child: Column(
+          children: [
+            Card(
+              clipBehavior: Clip.none,
+              elevation: 10.0,
+              margin: EdgeInsets.zero,
+
+              child: Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  const Image(
+                    image: AssetImage("assets/shop_card2.png"),
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Text(
+                          "Browse our different categories",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 37.0,
+                            fontFamily: "QuickSand",
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 5.0,
-              ),
-              GridView.builder(
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
                 key: pageStorageKey,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -64,8 +67,8 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, index) {
                   return categoryItems[index];
                 }),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

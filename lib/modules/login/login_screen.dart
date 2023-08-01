@@ -44,6 +44,12 @@ class LoginScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: myOrange,
+              title: Text(
+                "G Shop",
+                style: TextStyle(
+                  fontFamily: "QuickSand"
+                ),
+              ),
             ),
             body: SingleChildScrollView(
               child: Padding(
@@ -155,32 +161,91 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 5.0,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: Colors.black,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(
+                              "OR",
+                              style: TextStyle(
+                                fontFamily: "QuickSand"
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 20.0,),
-                      Center(
-                        child: Column(
-                          children: [
-                            FloatingActionButton(
-                              backgroundColor: Colors.white,
-                              onPressed: (){
-                                cubit.signInWithGoogle();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: AssetImage("assets/google_logo.png"),
-
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            cubit.signInWithGoogle();
+                          },
+                          child: Row(
+                            children: [
+                              Image(
+                                height: 35.0,
+                                image: AssetImage(
+                                  "assets/google_logo.png",
                                 ),
-                              )),
-                            SizedBox(
-                              height: 8.0,
-                            ),
-                            Text(
-                              "Continue with Google",
-                              style: SmallText(context),
-                            ),
-                          ],
+                              ),
+                              SizedBox(width: 20.0,),
+                              Text(
+                                "Continue with Google",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "QuickSand",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                      // SizedBox(height: 20.0,),
+                      // Center(
+                      //   child: Column(
+                      //     children: [
+                      //       FloatingActionButton(
+                      //         backgroundColor: Colors.white,
+                      //         onPressed: (){
+                      //           cubit.signInWithGoogle();
+                      //         },
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(10.0),
+                      //           child: Image(
+                      //             image: AssetImage("assets/google_logo.png"),
+                      //
+                      //           ),
+                      //         )),
+                      //       SizedBox(
+                      //         height: 8.0,
+                      //       ),
+                      //       Text(
+                      //         "Continue with Google",
+                      //         style: SmallText(context),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
