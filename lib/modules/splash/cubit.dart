@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/modules/splash/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +36,6 @@ class SplashCubit extends Cubit<SplashStates> {
       FirebaseAuth.instance.signOut();
       emit(SplashNotLoggedInState());
     });
-
   }
 
   void simulateServiceCall(int seconds) {

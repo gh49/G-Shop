@@ -45,13 +45,15 @@ class RegisterCubit extends Cubit<RegisterStates> {
         name: name,
         gender: gender,
         phoneNumber: phoneNumber,
-        dateOfBirth: dateOfBirth
+        dateOfBirth: dateOfBirth,
+        uID: "",
     );
 
     FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password).
     then((value) {
+      newUser.uID = value.user!.uid;
       FirebaseFirestore.instance.collection("users").doc(value.user!.uid).set(newUser.toJson()).
       then((value) {
         emit(RegisterSuccessState());

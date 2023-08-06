@@ -24,6 +24,7 @@ class ShoppingLayout extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: myOrange,
+              elevation: 0.0,
               title: Text(
                 cubit.titles[cubit.screenIndex],
                 style: TextStyle(
