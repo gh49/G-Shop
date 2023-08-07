@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/modules/products/products_view_screen.dart';
 import 'package:ecommerce_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -316,6 +317,6 @@ Widget ProductItem({
   );
 }
 
-void categoryItemOnPressed(CategoryType category) {
-
+void categoryItemOnPressed(CategoryType categoryType, BuildContext context) {
+  navigateTo(context, ProductsViewScreen(categoryType: categoryType));
 }

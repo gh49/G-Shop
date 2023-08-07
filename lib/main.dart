@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce app',
       debugShowCheckedModeBanner: false,
-      home: ProductsViewScreen(categoryType: CategoryType.allProducts),
+      home: SplashScreen(),
     );
   }
 }

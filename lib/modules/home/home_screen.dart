@@ -53,20 +53,65 @@ class HomeScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
+              child: GridView.count(
                 key: pageStorageKey,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
-                itemCount: categoryItems.length,
-                itemBuilder: (BuildContext context, index) {
-                  return categoryItems[index];
-                }),
+                crossAxisCount: 2,
+                mainAxisSpacing: 6.0,
+                crossAxisSpacing: 6.0,
+                children: [
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.allProducts, context);
+                    },
+                    iconData: Icons.search,
+                    text: "All Products",
+                    color: Colors.yellow.shade800,
+                  ),
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.electronics, context);
+                    },
+                    iconData: Icons.phone_iphone,
+                    text: "Electronics",
+                    color: Colors.blue,
+                  ),
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.books, context);
+                    },
+                    iconData: Icons.menu_book,
+                    text: "Books",
+                    color: Colors.brown,
+                  ),
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.homeAppliances, context);
+                    },
+                    iconData: Icons.local_laundry_service,
+                    text: "Home Appliances",
+                    color: Colors.grey,
+                  ),
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.healthAndPersonalCare, context);
+                    },
+                    iconData: Icons.health_and_safety,
+                    text: "Health & Personal Care",
+                    color: Colors.red,
+                  ),
+                  CategoryItem(
+                    onPressed: () {
+                      categoryItemOnPressed(CategoryType.sportEquipment, context);
+                    },
+                    iconData: Icons.sports_football,
+                    text: "Sport Equipment",
+                    color: Colors.green,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
