@@ -1,5 +1,16 @@
 import 'package:ecommerce_app/shared/constants.dart';
 
+enum CompareType {
+  increasing,
+  decreasing,
+}
+
+enum CompareBy {
+  name,
+  rating,
+  price,
+}
+
 class ProductData {
   String? name;
   String? pID;
@@ -108,5 +119,47 @@ class ProductData {
       default:
         return "allProducts";
     }
+  }
+
+  int compareTo(ProductData productData, CompareType compareType, CompareBy compareBy) {
+    int result = 0;
+    switch(compareBy) {
+      case CompareBy.price:
+        double price1 = price??0.0;
+        double price2 = productData.price??0.0;
+        if(price1 > price2) {
+          result = 1;
+        }
+        else if(price1 < price2) {
+          result = -1;
+        }
+        if(compareType == CompareType.decreasing) {
+          result *= -1;
+        }
+        break;
+      case CompareBy.rating:
+        double rating1 = rating??0.0;
+        double rating2 = productData.rating??0.0;
+        if(rating1 > rating2) {
+          result = 1;
+        }
+        else if(rating1 < rating2) {
+          result = -1;
+        }
+        if(compareType == CompareType.decreasing) {
+          result *= -1;
+        }
+        break;
+      default:
+        String name1 = name??"";
+        String name2 = productData.name??"";
+        result = name1.compareTo(name2);
+        if(compareType == CompareType.decreasing) {
+          result *= -1;
+        }
+        break;
+    }
+
+    return result;
   }
 }

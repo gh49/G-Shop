@@ -201,21 +201,20 @@ Widget ProductItem({
 }) {
   return Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
-    //color: Colors.pink.withOpacity(0.6),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
     elevation: 10.0,
     child: IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            color: Colors.grey.withOpacity(0.3),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image(
-                image: NetworkImage(image),
-                width: 130.0,
-                fit: BoxFit.fitWidth,
-              ),
+            color: Colors.grey.shade100,
+            child: Image(
+              image: NetworkImage(image),
+              width: 130.0,
+              fit: BoxFit.fitWidth,
             ),
           ),
           Expanded(

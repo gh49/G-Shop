@@ -38,6 +38,7 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
   }
 
   List<ProductData> queryResult = [];
+  List<ProductData> productsList = [];
 
   void simpleQuery(CategoryType categoryType) {
     var db = FirebaseFirestore.instance;
@@ -50,10 +51,10 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
 
     query.get().then((products) {
       for (var product in products.docs) {
-        print(product.data());
         ProductData productData = ProductData.fromJson(product.data());
-        queryResult.add(productData);
+        productsList.add(productData);
       }
+      queryResult = cloneList(productsList);
       emit(ProductsViewSuccessState());
     }).catchError((error) {
       print(error.toString());
@@ -80,5 +81,26 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
       print("Service Call Completed");
       emit(ProductsViewInitialState());
     });
+  }
+
+  void search(String keyword) {
+    List<ProductData> result = [];
+    for(int i=0; i<productsList.length; i++) {
+      if(productsList[i].name != null && productsList[i].name!.toLowerCase().contains(keyword.toLowerCase())) {
+        result.add(productsList[i]);
+      }
+    }
+    //Apply Filters on result
+    queryResult = result;
+    emit(ProductsViewUpdateProductsListState());
+  }
+
+  List<T> cloneList<T>(List<T> list) {
+    List<T> clonedList = [];
+
+    for(int i=0; i<list.length; i++) {
+      clonedList.add(list[i]);
+    }
+    return clonedList;
   }
 }

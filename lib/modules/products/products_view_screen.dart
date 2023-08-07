@@ -43,6 +43,15 @@ class ProductsViewScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+
+              },
+              child: Icon(
+                Icons.filter_alt
+              ),
+            ),
             body: ListView(
               physics: BouncingScrollPhysics(),
               children: [
@@ -56,8 +65,89 @@ class ProductsViewScreen extends StatelessWidget {
                         controller: searchController,
                         prefixIcon: Icon(Icons.search),
                         labelText: "Search",
+                        onChanged: (value) {
+                          cubit.search(value);
+                        }
                       ),
                       SizedBox(height: 10.0,),
+                      SizedBox(
+                        height: 35.0,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Search for: ${searchController.text}",
+                                    style: TextStyle(
+                                      fontFamily: "QuickSand",
+                                      fontSize: 13.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Prices from 100JD to 200JD",
+                                    style: TextStyle(
+                                      fontFamily: "QuickSand",
+                                      fontSize: 13.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Rating from 1.2 to 3.5",
+                                    style: TextStyle(
+                                      fontFamily: "QuickSand",
+                                      fontSize: 13.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10.0,),
+                      if(cubit.queryResult.length == 0)
+                        Center(
+                          child: Text(
+                            "No products found",
+                            style: TextStyle(
+                              fontFamily: "QuickSand",
+                              fontSize: 30.0
+                            ),
+                          ),
+                        ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
