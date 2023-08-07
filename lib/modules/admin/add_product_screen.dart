@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AddProductScreen extends StatelessWidget {
   AddProductScreen({super.key});
 
+  SnackBar? snackBar;
+
   var formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -23,7 +25,19 @@ class AddProductScreen extends StatelessWidget {
       create: (context) => AddProductCubit(),
       child: BlocConsumer<AddProductCubit, AddProductStates>(
         listener: (context, state) {
-
+          if(state is AddProductInitialState) {
+            if(snackBar != null) {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar!);
+              snackBar = null;
+            }
+          }
+          if(state is AddProductErrorState) {
+            showToast(context, "${state.error}", ToastType.error);
+            print(state.error);
+          }
+          if(state is AddProductSuccessState) {
+            showToast(context, "Product Added Successfully", ToastType.success);
+          }
         },
         builder: (context, state) {
           var cubit = AddProductCubit.get(context);
@@ -42,9 +56,6 @@ class AddProductScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image(
-                        image: NetworkImage("https://store.sony.com.au/dw/image/v2/ABBC_PRD/on/demandware.static/-/Sites-sony-master-catalog/default/dw88febf25/images/PS5GOWRAGNAROKBUND/PS5GOWRAGNAROKBUND.png"),
-                      ),
                       SizedBox(
                         height: 30.0,
                       ),
@@ -151,21 +162,24 @@ class AddProductScreen extends StatelessWidget {
                           text: "Add Product",
                           fontWeight: FontWeight.bold,
                           onPressed: () {
-                            if(formKey.currentState!.validate()) {
-                              ProductData newProduct = ProductData(
-                                  name: nameController.text,
-                                  pID: "",
-                                  rating: 0,
-                                  ratingCount: 0,
-                                  image: imageController.text,
-                                  quantity: int.parse(quantityController.text),
-                                  category: categoryController.text,
-                              );
-                              cubit.addProduct(newProduct);
-                            }
-                            else {
-                              cubit.emitInvalidInput();
-                            }
+                            cubit.simpleQuery();
+                            // if(formKey.currentState!.validate()) {
+                            //   ProductData newProduct = ProductData(
+                            //       name: nameController.text,
+                            //       pID: "",
+                            //       rating: 0,
+                            //       ratingCount: 0,
+                            //       image: imageController.text,
+                            //       quantity: int.parse(quantityController.text),
+                            //       category: categoryController.text,
+                            //       description: "",
+                            //       price: double.parse(priceController.text),
+                            //   );
+                            //   cubit.addProduct(newProduct);
+                            // }
+                            // else {
+                            //   cubit.emitInvalidInput();
+                            // }
                           },
                         ),
                       if(state is AddProductLoadingState)

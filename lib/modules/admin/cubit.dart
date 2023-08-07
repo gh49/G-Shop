@@ -19,6 +19,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
     else {
       isInitState = false;
     }
+
+    simulateServiceCall(2);
     
     FirebaseAuth.instance.signInWithEmailAndPassword(
         email: "admin@admin.com",
@@ -32,18 +34,48 @@ class AddProductCubit extends Cubit<AddProductStates> {
   }
 
   void addProduct(ProductData productData) {
-    print(productData.toString());
+    FirebaseFirestore.instance.collection("products").
+    add(productData.toJson()).
+    then((value) {
+      productData.pID = value.id;
+      value.update(productData.toJson()).
+      then((value) {
+        emit(AddProductSuccessState());
+      }).
+      catchError((error) {
+        emit(AddProductErrorState(error.toString()));
+      });
+    }).
+    catchError((error) {
+      emit(AddProductErrorState(error.toString()));
+    });
   }
 
   void emitInvalidInput() {
     emit(AddProductInvalidInputState());
+  }
+
+  void simpleQuery() {
+    var db = FirebaseFirestore.instance;
+    var productsRef = db.collection('products');
+    var query = productsRef.where("quantity", isGreaterThan: 0);
+    query.get().then((value) {
+      print("Checking");
+      for (var docSnapshot in value.docs) {
+        if(docSnapshot.data()['name'].toString().contains("Pantene")) {
+          print(docSnapshot.data());
+        }
+      }
+    }).catchError((error) {
+      print("Error");
+    });
   }
   
   void simulateServiceCall(int seconds) {
     Future.delayed(Duration(seconds: seconds)).
     then((value) {
       print("Service Call Completed");
-      emit(AddProductSuccessState());
+      emit(AddProductInitialState());
     });
   }
 }

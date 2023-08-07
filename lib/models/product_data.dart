@@ -8,6 +8,8 @@ class ProductData {
   String? image;
   int? quantity;
   String? category;
+  String? description;
+  double? price;
 
   ProductData({
     required this.name,
@@ -17,16 +19,38 @@ class ProductData {
     required this.image,
     required this.quantity,
     required this.category,
+    required this.description,
+    required this.price,
   });
 
-  ProductData.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        pID = json['pID'],
-        rating = json['rating'],
-        ratingCount = json['ratingCount'],
-        image = json['image'],
-        quantity = json['quantity'],
-        category = json['category'];
+  // ProductData.fromJson(Map<String, dynamic> json)
+  //     : name = json['name'],
+  //       pID = json['pID'],
+  //       rating = json['rating'],
+  //       ratingCount = json['ratingCount'],
+  //       image = json['image'],
+  //       quantity = json['quantity'],
+  //       category = json['category'],
+  //       description = json['description'],
+  //       price = json['price'] as double;
+
+  ProductData.fromJson(Map<String, dynamic> json) {
+    if(json['rating'] is int) {
+      json['rating'] = (json['rating'] as int).toDouble();
+    }
+    if(json['price'] is int) {
+      json['price'] = (json['price'] as int).toDouble();
+    }
+    name = json['name'];
+    pID = json['pID'];
+    rating = json['rating'];
+    ratingCount = json['ratingCount'];
+    image = json['image'];
+    quantity = json['quantity'];
+    category = json['category'];
+    description = json['description'];
+    price = json['price'];
+  }
 
   Map<String, dynamic> toJson() => {
     'name': name,
@@ -36,16 +60,20 @@ class ProductData {
     'image': image,
     'quantity': quantity,
     'category': category,
+    'description': description,
+    'price': price,
   };
 
   @override
   String toString() {
     return "name: $name, "
         "rating: $rating,"
-        "rating count: $ratingCount,"
-        "image: $image,"
-        "quantity: $quantity,"
-        "category: $category";
+        "rating count: $ratingCount, "
+        "image: $image, "
+        "quantity: $quantity, "
+        "category: $category, "
+        "description: $description, "
+        "price: $price";
   }
 
   static CategoryType getCategoryType(String categoryText) {
