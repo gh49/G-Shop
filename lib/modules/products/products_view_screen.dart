@@ -380,8 +380,7 @@ class ProductsViewScreen extends StatelessWidget {
                   floatingActionButtonIcon = Icon(Icons.filter_alt);
                   Navigator.pop(context);
                   cubit.emit(ProductsViewUpdateFloatingButtonState());
-                  cubit.sortProductsView(sortBy);
-                  cubit.applyFilters(priceCurrentRangeValues, ratingCurrentRangeValues);
+                  cubit.search(searchController.text, sortBy, priceCurrentRangeValues, ratingCurrentRangeValues);
                   print("Price range from ${priceCurrentRangeValues.start} to ${priceCurrentRangeValues.end}");
                   print("Rating range from ${ratingCurrentRangeValues.start} to ${ratingCurrentRangeValues.end}");
                 }
