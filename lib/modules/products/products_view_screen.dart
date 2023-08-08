@@ -16,6 +16,9 @@ class ProductsViewScreen extends StatelessWidget {
   });
 
   TextEditingController searchController = TextEditingController();
+  CompareBy sortBy = CompareBy.name;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool bottomSheetOpened = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class ProductsViewScreen extends StatelessWidget {
           cubit.init(categoryType);
 
           return Scaffold(
+            key: scaffoldKey,
             appBar: AppBar(
               backgroundColor: myOrange,
               elevation: 0.0,
@@ -43,10 +47,253 @@ class ProductsViewScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             floatingActionButton: FloatingActionButton(
               onPressed: () {
+                if(!bottomSheetOpened) {
+                  bottomSheetOpened = true;
+                  scaffoldKey.currentState?.showBottomSheet((context) {
+                    return StatefulBuilder(builder: (context,
+                        StateSetter setState) {
+                      return Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Sort By",
+                                      style: TextStyle(
+                                          fontFamily: "QuickSand",
+                                          fontSize: 25.0
+                                      ),
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                "Alphabetical",
+                                                style: TextStyle(
+                                                    fontFamily: "QuickSand",
+                                                    fontSize: 20.0
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.name,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy = CompareBy.name;
+                                                      setState(() {});
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "A-Z",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.nameD,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy = CompareBy.nameD;
+                                                      setState(() {
 
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Z-A",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                "Price",
+                                                style: TextStyle(
+                                                    fontFamily: "QuickSand",
+                                                    fontSize: 20.0
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.price,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy = CompareBy.price;
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Low to High",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.priceD,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy = CompareBy.priceD;
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "High to Low",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                "Rating",
+                                                style: TextStyle(
+                                                    fontFamily: "QuickSand",
+                                                    fontSize: 20.0
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.ratingD,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy =
+                                                          CompareBy.ratingD;
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "High to Low",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio(
+                                                    value: CompareBy.rating,
+                                                    groupValue: sortBy,
+                                                    activeColor: myOrange,
+                                                    onChanged: (value) {
+                                                      sortBy = CompareBy.rating;
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Low to High",
+                                                    style: TextStyle(
+                                                        fontFamily: "QuickSand",
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(),
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Filters",
+                                      style: TextStyle(
+                                          fontFamily: "QuickSand",
+                                          fontSize: 30.0
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+                  }).closed.then((value) {
+                    print("Closed");
+                    bottomSheetOpened = false;
+                  });
+                }
+                else {
+                  Navigator.pop(context);
+                }
               },
               child: Icon(
                 Icons.filter_alt
@@ -171,6 +418,241 @@ class ProductsViewScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void settingModalBottomSheet(BuildContext context){
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context){
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            "Sort By",
+                            style: TextStyle(
+                                fontFamily: "QuickSand",
+                                fontSize: 25.0
+                            ),
+                          ),
+                          SizedBox(height: 5.0,),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Alphabetical",
+                                      style: TextStyle(
+                                          fontFamily: "QuickSand",
+                                          fontSize: 20.0
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.name,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.name;
+                                            setState(() {
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "A-Z",
+                                          style: TextStyle(
+                                              fontFamily: "QuickSand",
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.nameD,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.nameD;
+                                            setState(() {
+
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "Z-A",
+                                          style: TextStyle(
+                                              fontFamily: "QuickSand",
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Price",
+                                      style: TextStyle(
+                                          fontFamily: "QuickSand",
+                                          fontSize: 20.0
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.price,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.price;
+                                            setState(() {
+
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "Low to High",
+                                          style: TextStyle(
+                                              fontFamily: "QuickSand",
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.priceD,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.priceD;
+                                            setState(() {
+
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "High to Low",
+                                          style: TextStyle(
+                                            fontFamily: "QuickSand",
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Rating",
+                                      style: TextStyle(
+                                          fontFamily: "QuickSand",
+                                          fontSize: 20.0
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.ratingD,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.ratingD;
+                                            setState(() {
+
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "High to Low",
+                                          style: TextStyle(
+                                              fontFamily: "QuickSand",
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio(
+                                          value: CompareBy.rating,
+                                          groupValue: sortBy,
+                                          activeColor: myOrange,
+                                          onChanged: (value) {
+                                            sortBy = CompareBy.rating;
+                                            setState(() {
+
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "Low to High",
+                                          style: TextStyle(
+                                              fontFamily: "QuickSand",
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            "Filters",
+                            style: TextStyle(
+                                fontFamily: "QuickSand",
+                                fontSize: 30.0
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+        }
     );
   }
 }

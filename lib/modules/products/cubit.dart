@@ -3,6 +3,7 @@ import 'package:ecommerce_app/models/product_data.dart';
 import 'package:ecommerce_app/modules/products/states.dart';
 import 'package:ecommerce_app/shared/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,4 +104,5 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
     }
     return clonedList;
   }
+
 }

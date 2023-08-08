@@ -7,8 +7,11 @@ enum CompareType {
 
 enum CompareBy {
   name,
+  nameD,
   rating,
+  ratingD,
   price,
+  priceD,
 }
 
 class ProductData {
