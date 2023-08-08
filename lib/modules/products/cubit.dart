@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/models/product_data.dart';
 import 'package:ecommerce_app/modules/products/states.dart';
 import 'package:ecommerce_app/shared/constants.dart';
+import 'package:ecommerce_app/shared/functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsViewCubit extends Cubit<ProductsViewStates> {
@@ -12,6 +12,7 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
   static ProductsViewCubit get(context) => BlocProvider.of(context);
 
   bool isInitState = true;
+  bool fetchingData = true;
 
   void init(CategoryType categoryType) {
     if(!isInitState) {
@@ -56,8 +57,11 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
         productsList.add(productData);
       }
       queryResult = cloneList(productsList);
+      sortProducts(queryResult, CompareBy.name);
+      fetchingData = false;
       emit(ProductsViewSuccessState());
     }).catchError((error) {
+      fetchingData = false;
       print(error.toString());
     });
   }
@@ -84,7 +88,7 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
     });
   }
 
-  void search(String keyword) {
+  void search(String keyword, CompareBy compareBy, RangeValues priceRange, RangeValues ratingRange) {
     List<ProductData> result = [];
     for(int i=0; i<productsList.length; i++) {
       if(productsList[i].name != null && productsList[i].name!.toLowerCase().contains(keyword.toLowerCase())) {
@@ -93,6 +97,8 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
     }
     //Apply Filters on result
     queryResult = result;
+    sortProducts(queryResult, compareBy);
+    applyFilters(priceRange, ratingRange);
     emit(ProductsViewUpdateProductsListState());
   }
 
@@ -103,6 +109,29 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
       clonedList.add(list[i]);
     }
     return clonedList;
+  }
+
+  void sortProductsView(CompareBy compareBy) {
+    print("${queryResult[0].name} and ${queryResult[1].name}");
+    print("${queryResult[0].compareTo(queryResult[1], CompareBy.name)}");
+    print("${queryResult[0].compareTo(queryResult[1], CompareBy.nameD)}");
+    sortProducts(queryResult, compareBy);
+    emit(ProductsViewUpdateProductsListState());
+  }
+
+  void applyFilters(RangeValues priceRange, RangeValues ratingRange) {
+    List<ProductData> result = [];
+
+    for(var product in queryResult) {
+      double price = product.price??0.0;
+      double rating = product.rating??0.0;
+      if(price >= priceRange.start && price <= priceRange.end
+      && rating >= ratingRange.start && rating <= ratingRange.end) {
+        result.add(product);
+      }
+    }
+
+    queryResult = result;
   }
 
 }

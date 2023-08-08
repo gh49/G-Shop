@@ -15,3 +15,7 @@ class ProductsViewErrorState extends ProductsViewStates {
 class ProductsViewInvalidInputState extends ProductsViewStates {}
 
 class ProductsViewUpdateProductsListState extends ProductsViewStates {}
+
+class ProductsViewUpdateProductsState extends ProductsViewStates {}
+
+class ProductsViewUpdateFloatingButtonState extends ProductsViewStates {}

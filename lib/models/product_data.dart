@@ -1,10 +1,5 @@
 import 'package:ecommerce_app/shared/constants.dart';
 
-enum CompareType {
-  increasing,
-  decreasing,
-}
-
 enum CompareBy {
   name,
   nameD,
@@ -124,10 +119,10 @@ class ProductData {
     }
   }
 
-  int compareTo(ProductData productData, CompareType compareType, CompareBy compareBy) {
+  int compareTo(ProductData productData, CompareBy compareBy) {
     int result = 0;
     switch(compareBy) {
-      case CompareBy.price:
+      case CompareBy.price || CompareBy.priceD:
         double price1 = price??0.0;
         double price2 = productData.price??0.0;
         if(price1 > price2) {
@@ -136,11 +131,11 @@ class ProductData {
         else if(price1 < price2) {
           result = -1;
         }
-        if(compareType == CompareType.decreasing) {
+        if(compareBy == CompareBy.priceD) {
           result *= -1;
         }
         break;
-      case CompareBy.rating:
+      case CompareBy.rating || CompareBy.ratingD:
         double rating1 = rating??0.0;
         double rating2 = productData.rating??0.0;
         if(rating1 > rating2) {
@@ -149,15 +144,15 @@ class ProductData {
         else if(rating1 < rating2) {
           result = -1;
         }
-        if(compareType == CompareType.decreasing) {
+        if(compareBy == CompareBy.ratingD) {
           result *= -1;
         }
         break;
       default:
         String name1 = name??"";
         String name2 = productData.name??"";
-        result = name1.compareTo(name2);
-        if(compareType == CompareType.decreasing) {
+        result = name1.toUpperCase().compareTo(name2.toUpperCase());
+        if(compareBy == CompareBy.nameD) {
           result *= -1;
         }
         break;

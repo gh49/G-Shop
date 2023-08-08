@@ -1,13 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/firebase_options.dart';
-import 'package:ecommerce_app/layouts/shopping_layout.dart';
-import 'package:ecommerce_app/modules/admin/add_product_screen.dart';
-import 'package:ecommerce_app/modules/login/login_screen.dart';
-import 'package:ecommerce_app/modules/products/products_view_screen.dart';
-import 'package:ecommerce_app/modules/register/register_screen.dart';
 import 'package:ecommerce_app/modules/splash/splash_screen.dart';
-import 'package:ecommerce_app/shared/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
