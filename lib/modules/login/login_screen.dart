@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
             print(state.error);
           }
           if(state is LoginSuccessState) {
+            LoginCubit.get(context).getTokenTest();
             navigateAndFinish(context, ShoppingLayout());
           }
         },

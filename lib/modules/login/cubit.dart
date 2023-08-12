@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/modules/login/states.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,4 +79,24 @@ class LoginCubit extends Cubit<LoginStates> {
       emit(LoginErrorState(error.toString()));
     });
   }
+
+  //Method for testing tokens in API
+  Future<String> getTokenTest() async {
+    String idToken = await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
+    FirebaseFirestore.instance.collection("tokens").doc("testtoken").set({"token": idToken}).
+    then((value) {
+
+    }).catchError((onError) {
+
+    });
+
+    DioHelper.updateUser({"decodedToken": idToken, "name": "blahblah"}).then((value) {
+      print(value.data.toString());
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return idToken;
+  }
+
+
 }

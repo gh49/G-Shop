@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/modules/splash/splash_screen.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ Future<void> main() async {
   );
 
   Bloc.observer = MyBlocObserver();
+  DioHelper.init();
   runApp(const MyApp());
 }
 
