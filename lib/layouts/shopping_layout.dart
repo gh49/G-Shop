@@ -42,6 +42,12 @@ class ShoppingLayout extends StatelessWidget {
                     },
                     icon: const Icon(Icons.logout),
                 ),
+                IconButton(
+                  onPressed: (){
+                    cubit.getTokenTest();
+                  },
+                  icon: const Icon(Icons.question_mark),
+                ),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

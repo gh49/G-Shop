@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/firebase_options.dart';
+import 'package:ecommerce_app/modules/product_details/product_details_screen.dart';
 import 'package:ecommerce_app/modules/splash/splash_screen.dart';
 import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce app',
       debugShowCheckedModeBanner: false,
+      // Home default screen is SplashScreen()
       home: SplashScreen(),
     );
   }

@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/layouts/states.dart';
 import 'package:ecommerce_app/models/screen_switcher.dart';
 import 'package:ecommerce_app/modules/cart/cart_screen.dart';
 import 'package:ecommerce_app/modules/home/home_screen.dart';
 import 'package:ecommerce_app/modules/settings/settings_screen.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,5 +66,22 @@ class ShoppingCubit extends Cubit<ShoppingStates> {
 
   void testEmit() {
     emit(ShoppingTestState());
+  }
+
+  Future<String> getTokenTest() async {
+    String idToken = await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
+    FirebaseFirestore.instance.collection("tokens").doc("testtoken").set({"token": idToken}).
+    then((value) {
+
+    }).catchError((onError) {
+
+    });
+
+    DioHelper.getProducts({"category": "electronics"}).then((value) {
+      print((value.data as List<dynamic>).length);
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return idToken;
   }
 }

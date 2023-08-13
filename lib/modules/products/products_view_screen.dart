@@ -494,6 +494,8 @@ class ProductsViewScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           ProductData productData = cubit.queryResult[index];
                           return ProductItem(
+                            context: context,
+                            pID: productData.pID??"",
                             image: productData.image??"",
                             name: productData.name??"",
                             rating: productData.rating??0,

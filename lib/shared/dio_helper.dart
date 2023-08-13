@@ -15,6 +15,9 @@ class DioHelper {
     );
   }
 
+  //
+  // User related requests
+  //
   static Future<Response> getUserDetails(Map<String, dynamic> data) async {
     return await dio!.get("users/get_details", queryParameters: data);
   }
@@ -25,5 +28,12 @@ class DioHelper {
 
   static Future<Response> updateUser(Map<String, dynamic> data) async {
     return await dio!.post("users/update_user", data: data);
+  }
+
+  //
+  // Product related requests
+  //
+  static Future<Response> getProducts(Map<String, dynamic> data) async {
+    return await dio!.get("products/get", queryParameters: data);
   }
 }

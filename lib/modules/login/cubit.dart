@@ -90,7 +90,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
     });
 
-    DioHelper.updateUser({"decodedToken": idToken, "name": "blahblah"}).then((value) {
+    DioHelper.getProducts({"category": "allProducts"}).then((value) {
       print(value.data.toString());
     }).catchError((error) {
       print(error.toString());

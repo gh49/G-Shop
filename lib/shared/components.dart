@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/modules/product_details/product_details_screen.dart';
 import 'package:ecommerce_app/modules/products/products_view_screen.dart';
 import 'package:ecommerce_app/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -193,124 +194,131 @@ Widget CategoryItem({
 }
 
 Widget ProductItem({
+  required BuildContext context,
+  required String pID,
   required String image,
   required String name,
   required double rating,
   required int ratersNumber,
   required double price,
 }) {
-  return Card(
-    clipBehavior: Clip.antiAliasWithSaveLayer,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-    ),
-    elevation: 10.0,
-    child: IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            color: Colors.grey.shade100,
-            child: Image(
-              image: NetworkImage(image),
-              width: 130.0,
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontFamily: "QuickSand",
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            //Rating value
-                            Text(
-                              "${rating.toStringAsFixed(1)}",
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: "QuickSand",
-                              ),
-                            ),
-                            SizedBox(width: 3.0,),
-                            RatingBar.builder(
-                              initialRating: rating,
-                              ignoreGestures: true,
-                              minRating: 0,
-                              maxRating: 5,
-                              itemSize: 15.0,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                              },
-                            ),
-                            SizedBox(width: 3.0,),
-                            //Rating number
-                            Text(
-                              "($ratersNumber)",
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: "QuickSand",
-                              ),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        RichText(
-                          text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "${price.toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                    fontFamily: "QuickSand",
-                                    fontSize: 30.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "JD",
-                                  style: TextStyle(
-                                    fontFamily: "QuickSand",
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ]
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+  return InkWell(
+    onTap: () {
+      navigateTo(context, ProductDetailsScreen(pID: pID));
+    },
+    child: Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 10.0,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              color: Colors.grey.shade100,
+              child: Image(
+                image: NetworkImage(image),
+                width: 130.0,
+                fit: BoxFit.fitWidth,
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "QuickSand",
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              //Rating value
+                              Text(
+                                "${rating.toStringAsFixed(1)}",
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: "QuickSand",
+                                ),
+                              ),
+                              SizedBox(width: 3.0,),
+                              RatingBar.builder(
+                                initialRating: rating,
+                                ignoreGestures: true,
+                                minRating: 0,
+                                maxRating: 5,
+                                itemSize: 15.0,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                },
+                              ),
+                              SizedBox(width: 3.0,),
+                              //Rating number
+                              Text(
+                                "($ratersNumber)",
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: "QuickSand",
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          RichText(
+                            text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "${price.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                      fontFamily: "QuickSand",
+                                      fontSize: 30.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "JD",
+                                    style: TextStyle(
+                                      fontFamily: "QuickSand",
+                                      fontSize: 20.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
