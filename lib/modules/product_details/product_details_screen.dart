@@ -22,8 +22,9 @@ class ProductDetailsScreen extends StatelessWidget {
         },
         builder: (BuildContext context, state) {
           var cubit = ProductDetailsCubit.get(context);
+          print("pID: $pID");
           cubit.init(pID);
-          print("state: ${state.toString()}");
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: myOrange,
@@ -103,7 +104,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       Image(
                         fit: BoxFit.scaleDown,
                         height: 300.0,
-                        image: NetworkImage(cubit.product?.image ?? "https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg"),
+                        image: NetworkImage(cubit.product?.image ?? defaultImage),
                       ),
                       SizedBox(height: 10.0,),
                       Text(
@@ -146,11 +147,19 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 15.0,),
-                      MyButton(
+                      if(state is! ProductDetailsAddToCartLoadingState)...[
+                        MyButton(
                         text: "Add to Cart",
                         onPressed: () {
                           cubit.addToCart(context, pID);
                         },
+                      ),
+                      ]
+                      else
+                        Center(
+                        child: CircularProgressIndicator(
+                          color: myOrange,
+                        ),
                       ),
                       SizedBox(height: 15.0,),
                       Text(

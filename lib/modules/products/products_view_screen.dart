@@ -440,7 +440,7 @@ class ProductsViewScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "Prices from 100JD to 200JD",
+                                    "Prices from ${priceCurrentRangeValues.start.toStringAsFixed(0)}JD to ${priceCurrentRangeValues.end.toStringAsFixed(0)}JD",
                                     style: TextStyle(
                                       fontFamily: "QuickSand",
                                       fontSize: 13.0,
@@ -459,7 +459,7 @@ class ProductsViewScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "Rating from 1.2 to 3.5",
+                                    "Rating from ${ratingCurrentRangeValues.start.toStringAsFixed(1)} to ${ratingCurrentRangeValues.end.toStringAsFixed(1)}",
                                     style: TextStyle(
                                       fontFamily: "QuickSand",
                                       fontSize: 13.0,
@@ -493,6 +493,7 @@ class ProductsViewScreen extends StatelessWidget {
                         itemCount: cubit.queryResult.length,
                         itemBuilder: (context, index) {
                           ProductData productData = cubit.queryResult[index];
+                          print(productData);
                           return ProductItem(
                             context: context,
                             pID: productData.pID??"",

@@ -4,6 +4,7 @@ import 'package:ecommerce_app/modules/home/home_screen.dart';
 import 'package:ecommerce_app/modules/login/login_screen.dart';
 import 'package:ecommerce_app/shared/components.dart';
 import 'package:ecommerce_app/shared/constants.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,10 @@ class ShoppingLayout extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: (){
-                    cubit.getTokenTest();
+                    //cubit.getTokenTest();
+                    DioHelper.getProducts("allProducts").then((value) {
+                      print((value.data[50]));
+                    });
                   },
                   icon: const Icon(Icons.question_mark),
                 ),

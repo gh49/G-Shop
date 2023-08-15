@@ -1,3 +1,6 @@
+import 'package:ecommerce_app/modules/edit_profile/edit_profile_screen.dart';
+import 'package:ecommerce_app/modules/previous_orders/preivious_orders_screen.dart';
+import 'package:ecommerce_app/shared/components.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -6,33 +9,50 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       key: pageStorageKey,
       physics: BouncingScrollPhysics(),
-      child: Container(
-        width: double.infinity,
-        child: Column(
-          children: [
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-            Text("Settings Screen", style: TextStyle(fontSize: 50.0),),
-          ],
+      children: [
+        Divider(
+          height: 0.0,
         ),
-      ),
+        MaterialButton(
+          onPressed: () {
+            navigateTo(context, EditProfileScreen());
+          },
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Edit Profile",
+              style: TextStyle(
+                fontFamily: "QuickSand",
+                fontSize: 25.0,
+              ),
+            ),
+          ),
+        ),
+        Divider(
+          height: 0.0,
+        ),
+        MaterialButton(
+          onPressed: () {
+            navigateTo(context, OrdersScreen());
+          },
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Previous orders",
+              style: TextStyle(
+                fontFamily: "QuickSand",
+                fontSize: 25.0,
+              ),
+            ),
+          ),
+        ),
+        Divider(
+          height: 0.0,
+        ),
+      ],
     );
   }
 }

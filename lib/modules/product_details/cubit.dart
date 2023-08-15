@@ -4,6 +4,7 @@ import 'package:ecommerce_app/modules/product_details/states.dart';
 import 'package:ecommerce_app/modules/products/states.dart';
 import 'package:ecommerce_app/shared/components.dart';
 import 'package:ecommerce_app/shared/constants.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:ecommerce_app/shared/functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,9 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStates> {
 
   void addToCart(BuildContext context, String pID) {
     //Check if there is sufficient quantity
-    int quantity = product?.quantity ?? 0;
-    if(quantity <= 0) {
-      showToast(context, "Failed to Add Product to Cart", ToastType.error);
-      return;
-    }
-    FirebaseFirestore.instance.collection("carts").
-    doc(FirebaseAuth.instance.currentUser!.uid).
-    collection("products").add({"pID": pID}).then((value) {
+    emit(ProductDetailsAddToCartLoadingState());
+
+    DioHelper.addToCart(pID).then((value) {
       emit(ProductDetailsAddToCartSuccessState());
       showToast(context, "Product Added to Cart Successfully", ToastType.success);
     }).catchError((error) {

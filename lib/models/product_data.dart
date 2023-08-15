@@ -51,7 +51,12 @@ class ProductData {
       json['price'] = (json['price'] as int).toDouble();
     }
     name = json['name'];
-    pID = json['pID'];
+    if(json['pID'] == null) {
+      pID = json['pid'];
+    }
+    else {
+      pID = json['pID'];
+    }
     rating = json['rating'];
     ratingCount = json['ratingCount'];
     image = json['image'];
@@ -82,7 +87,8 @@ class ProductData {
         "quantity: $quantity, "
         "category: $category, "
         "description: $description, "
-        "price: $price";
+        "price: $price, "
+        "pid: $pID";
   }
 
   static CategoryType getCategoryType(String categoryText) {

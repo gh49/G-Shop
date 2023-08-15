@@ -90,7 +90,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
     });
 
-    DioHelper.getProducts({"category": "allProducts"}).then((value) {
+    DioHelper.getProducts("allProducts").then((value) {
       print(value.data.toString());
     }).catchError((error) {
       print(error.toString());

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/models/product_data.dart';
 import 'package:ecommerce_app/modules/products/states.dart';
 import 'package:ecommerce_app/shared/constants.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:ecommerce_app/shared/functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +24,8 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
     }
 
     simulateServiceCall(1);
+    simpleQuery(categoryType);
 
-    FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "admin@admin.com",
-        password: "admin49")
-        .then((value) {
-      simpleQuery(categoryType);
-    })
-        .catchError((error) {
-      print("Something went wrong");
-    });
   }
 
   void emitInvalidInput() {
@@ -43,17 +36,9 @@ class ProductsViewCubit extends Cubit<ProductsViewStates> {
   List<ProductData> productsList = [];
 
   void simpleQuery(CategoryType categoryType) {
-    var db = FirebaseFirestore.instance;
-    var productsRef = db.collection('products');
-    var query = productsRef.where("category", isEqualTo: ProductData.getCategoryText(categoryType));
-
-    if(categoryType == CategoryType.allProducts) {
-      query = productsRef.where("quantity", isGreaterThan: 0);
-    }
-
-    query.get().then((products) {
-      for (var product in products.docs) {
-        ProductData productData = ProductData.fromJson(product.data());
+    DioHelper.getProducts(ProductData.getCategoryText(categoryType)).then((products) {
+      for (var product in products.data) {
+        ProductData productData = ProductData.fromJson(product);
         productsList.add(productData);
       }
       queryResult = cloneList(productsList);

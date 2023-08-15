@@ -13,12 +13,12 @@ class UserData {
     required this.uID
   });
 
-  UserData.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        gender = json['gender'],
-        phoneNumber = json['phoneNumber'],
-        dateOfBirth = json['dateOfBirth'],
-        uID = json['uID'];
+  UserData.fromJson(Map<String, dynamic>? json)
+      : name = json?['name'],
+        gender = json?['gender'],
+        phoneNumber = json?['phoneNumber'],
+        dateOfBirth = json?['dateOfBirth'],
+        uID = json?['uID'];
 
   Map<String, dynamic> toJson() => {
     'name': name,
@@ -30,6 +30,6 @@ class UserData {
 
   @override
   String toString() {
-    return "name: $name, phone number: $phoneNumber";
+    return "uid: $uID, name: $name, gender: $gender, phone number: $phoneNumber, date of birth: $dateOfBirth";
   }
 }

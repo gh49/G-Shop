@@ -77,7 +77,7 @@ class ShoppingCubit extends Cubit<ShoppingStates> {
 
     });
 
-    DioHelper.getProducts({"category": "electronics"}).then((value) {
+    DioHelper.getProducts("electronics").then((value) {
       print((value.data as List<dynamic>).length);
     }).catchError((error) {
       print(error.toString());
