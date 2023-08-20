@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/models/product_data.dart';
 import 'package:ecommerce_app/modules/cart/states.dart';
 import 'package:ecommerce_app/shared/components.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,43 +104,54 @@ class CartCubit extends Cubit<CartStates> {
       return;
     }
 
-    double total = getTotal();
-    //FIRST CHECK IF THERE IS QUANTITY "SPECIAL CASE WITH DUPLICATES"
-    //THEN REMOVE THE CORRECT QUANTITY FROM THE PRODUCT
-    List<String> pIDList = [];
-    for(var product in cart) {
-      await FirebaseFirestore.instance.collection("carts").
-      doc(FirebaseAuth.instance.currentUser!.uid).
-      collection("products").doc(product?["cID"]).delete().catchError((error) {
-        print(error.toString());
-        try {
-          emit(CartCheckoutErrorState());
-        }
-        catch(e) {
-          print(e.toString());
-        }
-      });
-
-      pIDList.add(product?["pID"]);
-    }
-    DateTime now = DateTime.now();
-    String dateTimeString = "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}:${now.second}";
-    await FirebaseFirestore.instance.collection("orders").
-    add({
-      "uID": FirebaseAuth.instance.currentUser!.uid,
-      "products": pIDList,
-      "dateTime": dateTimeString,
-      "total": total,
+  //   double total = getTotal();
+  //   //FIRST CHECK IF THERE IS QUANTITY "SPECIAL CASE WITH DUPLICATES"
+  //   //THEN REMOVE THE CORRECT QUANTITY FROM THE PRODUCT
+  //   List<String> pIDList = [];
+  //   for(var product in cart) {
+  //     await FirebaseFirestore.instance.collection("carts").
+  //     doc(FirebaseAuth.instance.currentUser!.uid).
+  //     collection("products").doc(product?["cID"]).delete().catchError((error) {
+  //       print(error.toString());
+  //       try {
+  //         emit(CartCheckoutErrorState());
+  //       }
+  //       catch(e) {
+  //         print(e.toString());
+  //       }
+  //     });
+  //
+  //     pIDList.add(product?["pID"]);
+  //   }
+  //   DateTime now = DateTime.now();
+  //   String dateTimeString = "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}:${now.second}";
+  //   await FirebaseFirestore.instance.collection("orders").
+  //   add({
+  //     "uID": FirebaseAuth.instance.currentUser!.uid,
+  //     "products": pIDList,
+  //     "dateTime": dateTimeString,
+  //     "total": total,
+  //   });
+  //
+  //   cart = [];
+  //   print("DONE");
+  //
+  //   try {
+  //     emit(CartCheckoutSuccessState());
+  //   }
+  //   catch(e) {
+  //     print(e.toString());
+  //   }
+    DioHelper.checkout().then((value) {
+      if((value.data as bool) == false) {
+        emit(CartCheckoutErrorState());
+      }
+      else {
+        emit(CartCheckoutSuccessState());
+      }
+    }).catchError((error) {
+      print(error.toString());
+      emit(CartCheckoutErrorState());
     });
-
-    cart = [];
-    print("DONE");
-
-    try {
-      emit(CartCheckoutSuccessState());
-    }
-    catch(e) {
-      print(e.toString());
-    }
   }
 }

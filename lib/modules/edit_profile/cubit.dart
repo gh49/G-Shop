@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/models/user_data.dart';
 import 'package:ecommerce_app/modules/edit_profile/states.dart';
+import 'package:ecommerce_app/shared/dio_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,12 +73,12 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
       newData["dateOfBirth"] = dobController.text;
     }
 
-    String uID = FirebaseAuth.instance.currentUser!.uid;
-    var firestore = FirebaseFirestore.instance;
-    var usersCollection = firestore.collection("users");
-
-    usersCollection.doc(uID).update(newData).then((value) {
-      emit(EditProfileUpdateDataSuccessState());
+    DioHelper.updateUser(newData).then((value) {
+      if(value.data == true) {
+        emit(EditProfileUpdateDataSuccessState());
+      } else {
+        emit(EditProfileUpdateDataErrorState());
+      }
     }).catchError((error) {
       emit(EditProfileUpdateDataErrorState());
     });

@@ -45,10 +45,8 @@ class ShoppingLayout extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: (){
-                    //cubit.getTokenTest();
-                    DioHelper.getProducts("allProducts").then((value) {
-                      print((value.data[50]));
-                    });
+                    cubit.getTokenTest();
+
                   },
                   icon: const Icon(Icons.question_mark),
                 ),

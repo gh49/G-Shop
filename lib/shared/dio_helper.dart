@@ -38,6 +38,12 @@ class DioHelper {
     return await dio!.post("users/add_to_cart", data: data);
   }
 
+  static Future<Response> checkout() async {
+    String? decodedToken = await getToken();
+    Map<String, dynamic> data = {"decodedToken": decodedToken};
+    return await dio!.get("users/checkout", queryParameters: data);
+  }
+
   //
   // Product related requests
   //
